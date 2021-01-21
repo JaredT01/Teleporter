@@ -242,19 +242,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.LookRotation (transform, m_Camera.transform);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag == "Teleporter")
-            {
-                m_CharacterController.Move(new Vector3(0,17,50));
-            }
-            else if (other.tag == "Killbox")
-            {
-                CurrentPosition = (-m_CharacterController.transform.position)+ new Vector3(0,1,0);
-                m_CharacterController.GetComponent<CharacterController>().Move(CurrentPosition);
-            }
-        }
-        
+       
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
