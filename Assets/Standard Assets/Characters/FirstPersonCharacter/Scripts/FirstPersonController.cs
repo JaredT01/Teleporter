@@ -42,6 +42,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        private Vector3 CurrentPosition;
 
         // Use this for initialization
         private void Start()
@@ -126,6 +127,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
             }
+           
             m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
 
             ProgressStepCycle(speed);
@@ -240,6 +242,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.LookRotation (transform, m_Camera.transform);
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Teleporter")
+            {
+                m_CharacterController.Move(new Vector3(0,17,50));
+            }
+            else if (other.tag == "Killbox")
+            {
+                CurrentPosition = (-m_CharacterController.transform.position)+ new Vector3(0,1,0);
+                m_CharacterController.GetComponent<CharacterController>().Move(CurrentPosition);
+            }
+        }
+        
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
